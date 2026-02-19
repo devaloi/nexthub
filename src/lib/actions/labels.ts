@@ -66,17 +66,16 @@ export async function updateLabel(
   return { success: true };
 }
 
-export async function deleteLabel(id: string): Promise<ActionResult> {
+export async function deleteLabel(id: string): Promise<void> {
   await prisma.label.delete({ where: { id } });
   revalidatePath("/labels");
-  return { success: true };
 }
 
 export async function toggleIssueLabel(
   issueId: string,
   labelId: string,
   projectSlug: string
-): Promise<ActionResult> {
+): Promise<void> {
   const existing = await prisma.issueLabel.findUnique({
     where: { issueId_labelId: { issueId, labelId } },
   });
@@ -90,5 +89,4 @@ export async function toggleIssueLabel(
   }
 
   revalidatePath(`/projects/${projectSlug}`);
-  return { success: true };
 }

@@ -90,7 +90,7 @@ export async function updateProject(
   redirect(`/projects/${slug}`);
 }
 
-export async function deleteProject(id: string): Promise<ActionResult> {
+export async function deleteProject(id: string): Promise<void> {
   await prisma.project.delete({ where: { id } });
   revalidatePath("/projects");
   revalidatePath("/");

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { search } from "@/lib/actions/search";
-import { Card, CardContent, CardHeader, Badge } from "@/components/ui";
+import { Card, CardHeader, Badge } from "@/components/ui";
 import {
   STATUS_LABELS,
   STATUS_COLORS,

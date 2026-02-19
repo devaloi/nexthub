@@ -98,7 +98,7 @@ export async function updateIssue(
 export async function deleteIssue(
   id: string,
   projectSlug: string
-): Promise<ActionResult> {
+): Promise<void> {
   await prisma.issue.delete({ where: { id } });
   revalidatePath(`/projects/${projectSlug}`);
   revalidatePath("/");
@@ -109,12 +109,11 @@ export async function updateIssueStatus(
   id: string,
   projectSlug: string,
   status: string
-): Promise<ActionResult> {
+): Promise<void> {
   await prisma.issue.update({
     where: { id },
     data: { status },
   });
   revalidatePath(`/projects/${projectSlug}`);
   revalidatePath("/");
-  return { success: true };
 }
