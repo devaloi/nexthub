@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getIssue, deleteIssue, updateIssueStatus } from "@/lib/actions/issues";
+import { getLabels } from "@/lib/actions/labels";
 import { Button, Badge, Card, CardContent, CardHeader } from "@/components/ui";
+import { LabelPicker } from "@/components/labels/label-picker";
 import {
   STATUS_LABELS,
   STATUS_COLORS,
@@ -19,10 +21,14 @@ export default async function IssueDetailPage({
   params: Promise<{ slug: string; number: string }>;
 }) {
   const { slug, number } = await params;
-  const issue = await getIssue(slug, parseInt(number, 10));
+  const [issue, allLabels] = await Promise.all([
+    getIssue(slug, parseInt(number, 10)),
+    getLabels(),
+  ]);
   if (!issue) notFound();
 
   const deleteWithId = deleteIssue.bind(null, issue.id, slug);
+  const assignedLabelIds = issue.labels.map((il) => il.label.id);
 
   return (
     <div>
@@ -129,6 +135,17 @@ export default async function IssueDetailPage({
                     {PRIORITY_LABELS[issue.priority as IssuePriority]}
                   </Badge>
                 </p>
+              </div>
+              <div>
+                <span className="text-gray-500">Labels</span>
+                <div className="mt-1">
+                  <LabelPicker
+                    issueId={issue.id}
+                    projectSlug={slug}
+                    allLabels={allLabels}
+                    assignedLabelIds={assignedLabelIds}
+                  />
+                </div>
               </div>
               <div>
                 <span className="text-gray-500">Created</span>
