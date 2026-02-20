@@ -1,3 +1,5 @@
+[![CI](https://github.com/devaloi/nexthub/actions/workflows/ci.yml/badge.svg)](https://github.com/devaloi/nexthub/actions/workflows/ci.yml)
+
 # NextHub
 
 A fullstack project and issue tracking hub built with Next.js 15, Prisma, and TypeScript.
